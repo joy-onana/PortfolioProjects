@@ -7,7 +7,7 @@ select location, max(cast(people_vaccinated as int)) as vaccinations,population
 from dbo.['project portfolio$']
 where continent is null
 and location != 'International'
-group by location, population,month(cast( date as date))
+group by location, population
 
 
 ---2---- Including percentage vaccinated (continent)
@@ -33,7 +33,7 @@ and cast( date as date) >= '2021-03-01'
 group by location, population,DATENAME(mm,cast( date as date))
 
 
---------day on day vaccinated growth 9Nigeria as case study)
+--------day on day vaccinated growth (Nigeria as case study)
 with o ( date_,location,total_cases,vaccinations,population,percentage_vaccinated)
 as   
 (
