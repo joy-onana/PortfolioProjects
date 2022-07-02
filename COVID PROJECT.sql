@@ -2,7 +2,7 @@
 
 select * from dbo.['project portfolio$']
 
----1-Figures by Population (Continent)
+---1---- Figures by Population (Continent)
 select location, max(cast(people_vaccinated as int)) as vaccinations,population
 from dbo.['project portfolio$']
 where continent is null
@@ -18,11 +18,15 @@ where continent is null
 and location != 'International'
 group by location, population 
 
+
+
 ------3---- creating a month column from the date column
 select cast( date as date), DATENAME(mm,cast( date as date)) as monthname
 from dbo.['project portfolio$']
 
------4----including the month column in script 2 
+
+
+-----4---- including the month column in script 2 
 select DATENAME(mm,cast( date as date)) as monthname,
 location, max(cast(people_vaccinated as int)) as vaccinations,population,
 round((max(cast(people_vaccinated as int)))/population*100,2) as percentage_vaccinated
@@ -33,7 +37,8 @@ and cast( date as date) >= '2021-03-01'
 group by location, population,DATENAME(mm,cast( date as date))
 
 
---------previous day figure (Nigeria as case study)
+
+----5---- previous day figure (Nigeria as case study)
 with Nigeria_data ( date_,location,total_cases,vaccinations,population,percentage_vaccinated)
 as   
 (
@@ -53,7 +58,10 @@ round((vaccinations/ Lag(vaccinations) OVER (ORDER BY date_) - 1),2) as vac_grow
 from o
 order by date_ asc
 
---------day on day growth (Nigeria as case study)
+
+
+
+----6---- day on day growth (Nigeria as case study)
 with all_vac
 as 
 (select date,
